@@ -12,8 +12,8 @@ game_state.main.prototype = {
   preload: function() {
 
     game.load.image('sky', 'assets/sky.png');
-    game.load.image('ground', 'assets/platform.png');
-    game.load.image('ground', 'assets/base.png');
+    game.load.image('platform', 'assets/platform.png');
+    game.load.image('ground', 'assets/bloody floor.png');
     game.load.image('star', 'assets/star.png');
     game.load.image('hell', 'assets/hell.png');
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
@@ -30,16 +30,15 @@ game_state.main.prototype = {
 
     this.platforms = game.add.group();
     this.platforms.enableBody = true
-    var ground = this.platforms.create(0, game.world.height - 64, 'ground');
-    ground.scale.setTo(2, 2);
+    var ground = this.platforms.create(0, game.world.height - 68, 'ground');
+    ground.scale.setTo(1.5, 1.40);
     ground.body.immovable = true
     var ledge = this.platforms.create(250, 300, 'ground');
     ledge.body.immovable = true
-    var ledge = this.platforms.create(80, 420, 'ground');
+    var ledge = this.platforms.create(0, 420, 'ground');
     ledge.body.immovable = true;
-    var ledge = this.platforms.create(450, 650, 'ground');
+    var ledge = this.platforms.create(00, 190, 'ground');
     ledge.body.immovable = true
-    
     
     this.player = game.add.sprite(10, game.world.height - 115, 'df');
     this.player.scale.setTo(0.25, 0.25);
@@ -56,14 +55,15 @@ game_state.main.prototype = {
     this.stars.enableBody = true;
     for (var i = 0; i < 60; i++) {
     var star = this.stars.create(i*70, 0, 'star');
-    star.body.gravity.y = 500;
-    star.body.bounce.y = .5 + Math.random() *0.2;
+    star.body.gravity.y = 420;
+    star.body.bounce.y = .75 + Math.random() *0.2;
     
     } 
     this.scoreText = game.add.text(16, 16, 'score:0', {
       fontSize: '32px',
       fill: '#000'
     });
+    this.score = 0
 
   },
 
@@ -93,7 +93,9 @@ game_state.main.prototype = {
 
 },
   collectStar: function(player, star) {
-    star.kill();  
+    star.kill(); 
+    this.score ++; 
+    this.scoreText.text = "Score: " + this.score;
     
     }
 };
